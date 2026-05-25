@@ -60,7 +60,7 @@ custom:
 bpc_morning:
       name: "通勤运营早报"
       start: "07:00"                
-      end: "09:55"                  # 🚨 把结束时间改到 09:55，确保涵盖现在的 9:44
+      end: "10:15"                  # 🚨 把结束时间改到 09:55，确保涵盖现在的 9:44
       analyze: true                
       ai_mode: "current"           
       push: true                   
