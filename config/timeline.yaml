@@ -57,15 +57,14 @@ custom:
       end: "06:00"
       push: false
 
-    # 🌅 1. 通勤早报：09:30到岗前的底气
-    bpc_morning:
+bpc_morning:
       name: "通勤运营早报"
-      start: "08:30"
-      end: "09:20"                  # 跨度50分钟，留足GitHub排队裕量
-      analyze: true                # 开启 AI 审稿
-      ai_mode: "current"           # 分析当前最新局势
-      push: true                   # 允许推送至企业微信
-      report_mode: "current"       # 呈现当前最热数据
+      start: "07:00"                
+      end: "09:55"                  # 🚨 把结束时间改到 09:55，确保涵盖现在的 9:44
+      analyze: true                
+      ai_mode: "current"           
+      push: true                   
+      report_mode: "current"
 
     # 🍱 2. 午休快讯：吃饱后看看上午有啥新瓜
     bpc_noon:
