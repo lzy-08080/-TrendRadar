@@ -69,7 +69,7 @@ custom:
     # 🍱 2. 午休快讯：吃饱后看看上午有啥新瓜
     bpc_noon:
       name: "午休增量爆款"
-      start: "12:30"
+      start: "12:20"
       end: "13:30"
       push: true
       report_mode: "incremental"   # 🚨 极度关键：只推上午新爆发的，不看重复的
