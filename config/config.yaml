@@ -105,7 +105,7 @@ report:
   max_news_per_keyword: 0
 
 filter:
-  method: "ai"                  # 依然保持 AI 全盘掌控
+  method: "keyword"                  # 依然保持 AI 全盘掌控
   priority_sort_enabled: true
 
 ai_filter:
