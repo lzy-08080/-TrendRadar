@@ -7,8 +7,8 @@ app:
   show_version_update: true
 
 schedule:
-  enabled: false   # 保持 false，时间调度交由 GitHub Actions 控制
-  preset: "morning_evening"
+  enabled: false
+  preset: "custom"      # 👈 把 "morning_evening" 改成 "custom"
 
 # ===============================================================
 # 2. 数据源 - 热榜平台 (精简保留高净值流量池)
