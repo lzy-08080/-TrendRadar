@@ -36,59 +36,59 @@ rss:
     # 🎯 战队一：全网流量基本盘
     - id: "xhs-global-trending"
       name: "🔥小红书-全网热搜"
-      url: "https://rsshub.app/xiaohongshu/trending"
+      url: "https://my-rsshub-rust.vercel.app/xiaohongshu/trending"
 
     - id: "xhs-student-search"
       name: "🎓小红书-大学生实习"
-      url: "https://rsshub.app/xiaohongshu/search/大学生实习/hot"
+      url: "https://my-rsshub-rust.vercel.app/xiaohongshu/search/大学生实习/hot"
 
     - id: "competitor-uncareer"
       name: "🚨竞品监控-uncareer"
-      url: "https://rsshub.app/xiaohongshu/search/uncareer/hot"
+      url: "https://my-rsshub-rust.vercel.app/xiaohongshu/search/uncareer/hot"
 
     - id: "sv101"
       name: "💡智库-硅谷101"
-      url: "https://rsshub.app/xiaoyuzhou/podcast/5e77757d418a84a04620ec42"
+      url: "https://my-rsshub-rust.vercel.app/xiaoyuzhou/podcast/5e77757d418a84a04620ec42"
 
     - id: "xinzhiyuan"
       name: "💡智库-新智元"
-      url: "https://rsshub.app/zhihu/people/xin-zhi-yuan-84-75/posts"
+      url: "https://my-rsshub-rust.vercel.app/zhihu/people/xin-zhi-yuan-84-75/posts"
 
     - id: "deeptech"
       name: "💡智库-Deeptech深科技"
-      url: "https://rsshub.app/zhihu/people/deeptechshen-ke-ji/posts"
+      url: "https://my-rsshub-rust.vercel.app/zhihu/people/deeptechshen-ke-ji/posts"
 
     - id: "jiazi"
       name: "💡智库-甲子光年"
-      url: "https://rsshub.app/zhihu/people/jia-zi-guang-nian/posts"
+      url: "https://my-rsshub-rust.vercel.app/zhihu/people/jia-zi-guang-nian/posts"
 
     - id: "huxiu-article"
       name: "💡智库-虎嗅精选"
-      url: "https://rsshub.app/huxiu/article"
+      url: "https://my-rsshub-rust.vercel.app/huxiu/article"
 
     - id: "baobian"
       name: "💡智库-豹变"
-      url: "https://rsshub.app/zhihu/people/bao-bian-34/posts"
+      url: "https://my-rsshub-rust.vercel.app/zhihu/people/bao-bian-34/posts"
 
     - id: "42zhangjing"
       name: "💡智库-42章经"
-      url: "https://rsshub.app/zhihu/people/42zhang-jing-71/posts"
+      url: "https://my-rsshub-rust.vercel.app/zhihu/people/42zhang-jing-71/posts"
 
     - id: "ceibs"
       name: "💡智库-中欧商业评论"
-      url: "https://rsshub.app/zhihu/people/zhong-ou-shang-ye-ping-lun/posts"
+      url: "https://my-rsshub-rust.vercel.app/zhihu/people/zhong-ou-shang-ye-ping-lun/posts"
 
     - id: "shizhi"
       name: "💡智库-视知产研院"
-      url: "https://rsshub.app/zhihu/people/shi-zhi-chan-yan-yuan/posts"
+      url: "https://my-rsshub-rust.vercel.app/zhihu/people/shi-zhi-chan-yan-yuan/posts"
 
     - id: "liuxuesheng"
       name: "💡智库-留学生日报"
-      url: "https://rsshub.app/zhihu/people/bei-mei-liu-xue-sheng-ri-bao/posts"
+      url: "https://my-rsshub-rust.vercel.app/zhihu/people/bei-mei-liu-xue-sheng-ri-bao/posts"
 
     - id: "xiaomasong"
       name: "💡智库-小马宋"
-      url: "https://rsshub.app/zhihu/people/xiao-ma-song/posts"
+      url: "https://my-rsshub-rust.vercel.app/zhihu/people/xiao-ma-song/posts"
 
 
 
