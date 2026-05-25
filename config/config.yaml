@@ -145,7 +145,7 @@ notification:
   enabled: true
   channels:
     wework:
-      webhook_url: "${{ secrets.WECOM_WEBHOOK }}"  # 安全密钥占位符
+      webhook_url: ""  # 安全密钥占位符
       msg_type: "markdown"
 
 # ===============================================================
@@ -176,7 +176,7 @@ storage:
 # ===============================================================
 ai:
   model: "deepseek/deepseek-chat"
-  api_key: "${{ secrets.AI_API_KEY }}"           # 安全密钥占位符
+  api_key: ""           # 安全密钥占位符
   api_base: "https://api.deepseek.com/v1"
   timeout: 120
   temperature: 1.0
