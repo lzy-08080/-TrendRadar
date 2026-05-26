@@ -4,7 +4,6 @@
 # ═══════════════════════════════════════════════════════════════
 
 presets:
-  # 保持原生预设不变（以防万一未来想切换）
   always_on:
     name: "全天监控"
     description: "全天候监控，有新增立即推送。适合重度用户。"
@@ -35,22 +34,19 @@ presets:
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 custom:
   name: "BPC运营专属时间线"
-  description: "完美贴合09:30到岗、19:30下班的硬核运营节奏。"
+  description: "完美贴合09:30到岗、17:30下班的硬核运营节奏，定点推送。"
 
-  # 默认配置（静默期行为：24小时不间断吃入数据，但不给微信乱发消息）
   default:
-    collect: true                  # 始终采集数据（确保存储排名变化图谱）
-    analyze: false                 # 静默期不分析
+    collect: true
+    analyze: false
     ai_mode: "current"
-    push: false                    # 🚫 静默期绝对不推送，防止打扰工作
+    push: false                    # 静默期绝对不推送
     report_mode: "current"
     once:
-      analyze: true                # 每个时段只允许跑一次 AI
-      push: true                   # 每个时段企业微信只震动一次
+      analyze: true
+      push: true
 
-  # 🧱 第 1 步：定义运营核心卡点（时间段积木）
   periods:
-    # 💤 深夜静默：不打扰睡眠
     deep_quiet:
       name: "深夜静默"
       start: "23:00"
@@ -58,57 +54,45 @@ custom:
       push: false
 
     bpc_morning:
-      name: "通勤运营早报"
-      start: "07:00"                
-      end: "11:00"                  # 🚨 把结束时间改到 09:55，确保涵盖现在的 9:44
-      analyze: true                
-      ai_mode: "current"           
-      push: true                   
+      name: "早间定点推送"
+      start: "9:28"
+      end: "9:32"                  # 窄窗口保证在9:30准时触发一次
+      analyze: true
+      ai_mode: "current"
+      push: true
       report_mode: "current"
 
-    # 🍱 2. 午休快讯：吃饱后看看上午有啥新瓜
-    bpc_noon:
-      name: "午休增量爆款"
-      start: "3：00"
-      end: "5:30"
-      push: true
-      report_mode: "incremental"   # 🚨 极度关键：只推上午新爆发的，不看重复的
-      # analyze 继承 default=false，中午省点 Token 钱
-
-    # 🌆 3. 收工汇总：19:30下班前的选题复盘
     bpc_evening:
-      name: "收工全天大汇总"
-      start: "18:30"
-      end: "19:25"
-      analyze: true                # 让 AI 开始全天总结
-      ai_mode: "daily"             # 强行切换为 Daily 模式（复盘24h）
+      name: "下班前全天大汇总"
+      start: "17:28"
+      end: "17:32"                 # 17:30准时触发一次
+      analyze: true
+      ai_mode: "daily"
       push: true
-      report_mode: "daily"         # 报告也切换为全天总榜单，便于抄作业存选题
+      report_mode: "daily"
 
-    # 🏖️ 4. 周末自由：周末有爆款再推，不打扰休息
     weekend_free:
       name: "周末增量自由推"
       start: "10:00"
       end: "22:00"
       push: true
-      report_mode: "incremental"   # 只有出现跟“大学生/求职”极度相关的爆款才叫醒你
+      report_mode: "incremental"
 
-  # 🧱 第 2 步：组装日计划
   day_plans:
-    workday:                       # 工作日：高频密集轰炸
-      periods: ["deep_quiet", "bpc_morning", "bpc_noon", "bpc_evening"]
-    weekend:                       # 周末：佛系增量
+    workday:
+      # 只保留静默 + 早晚两次定点推送，去掉无效的 bpc_noon
+      periods: ["deep_quiet", "bpc_morning", "bpc_evening"]
+    weekend:
       periods: ["deep_quiet", "weekend_free"]
 
-  # 🧱 第 3 步：周映射（周一到周五拼命卷，周六周日放假）
   week_map:
-    1: "workday"                   # 周一
-    2: "workday"                   # 周二
-    3: "workday"                   # 周三
-    4: "workday"                   # 周四
-    5: "workday"                   # 周五
-    6: "weekend"                   # 周六
-    7: "weekend"                   # 周日
+    1: "workday"
+    2: "workday"
+    3: "workday"
+    4: "workday"
+    5: "workday"
+    6: "weekend"
+    7: "weekend"
 
   overlap:
     policy: "error_on_overlap"
