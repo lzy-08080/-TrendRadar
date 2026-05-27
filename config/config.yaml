@@ -33,63 +33,61 @@ rss:
     max_age_days: 1   # 🚨 极度关键：只抓最近24小时的内容
 
   feeds:
-    # 🎯 战队一：全网流量基本盘
-    - id: "xhs-global-trending"
+  - id: "xhs-global-trending"
       name: "🔥小红书-全网热搜"
-      url: "https://my-rsshub-rust.vercel.app/xiaohongshu/trending"
+      url: "https://rsshub.rssforever.com/xiaohongshu/trending"
 
     - id: "xhs-student-search"
       name: "🎓小红书-大学生实习"
-      url: "https://my-rsshub-rust.vercel.app/xiaohongshu/search/大学生实习/hot"
+      url: "https://rsshub.rssforever.com/xiaohongshu/search/大学生实习/hot"
 
     - id: "competitor-uncareer"
       name: "🚨竞品监控-uncareer"
-      url: "https://my-rsshub-rust.vercel.app/xiaohongshu/search/uncareer/hot"
+      url: "https://rsshub.rssforever.com/xiaohongshu/search/uncareer/hot"
 
     - id: "sv101"
       name: "💡智库-硅谷101"
-      url: "https://my-rsshub-rust.vercel.app/xiaoyuzhou/podcast/5e77757d418a84a04620ec42"
+      url: "https://feed.xyzcdn.net/7v79wz8v0m8z" # 🎯 换用官方原生音频流，100% 稳定避开反爬
 
     - id: "xinzhiyuan"
       name: "💡智库-新智元"
-      url: "https://my-rsshub-rust.vercel.app/zhihu/people/xin-zhi-yuan-84-75/posts"
+      url: "https://rsshub.rssforever.com/zhihu/people/xin-zhi-yuan-84-75/posts"
 
     - id: "deeptech"
       name: "💡智库-Deeptech深科技"
-      url: "https://my-rsshub-rust.vercel.app/zhihu/people/deeptechshen-ke-ji/posts"
+      url: "https://rsshub.rssforever.com/zhihu/people/deeptechshen-ke-ji/posts"
 
     - id: "jiazi"
       name: "💡智库-甲子光年"
-      url: "https://my-rsshub-rust.vercel.app/zhihu/people/jia-zi-guang-nian/posts"
+      url: "https://rsshub.rssforever.com/zhihu/people/jia-zi-guang-nian/posts"
 
     - id: "huxiu-article"
       name: "💡智库-虎嗅精选"
-      url: "https://my-rsshub-rust.vercel.app/huxiu/article"
+      url: "https://rsshub.rssforever.com/huxiu/article"
 
     - id: "baobian"
       name: "💡智库-豹变"
-      url: "https://my-rsshub-rust.vercel.app/zhihu/people/bao-bian-34/posts"
+      url: "https://rsshub.rssforever.com/zhihu/people/bao-bian-34/posts"
 
     - id: "42zhangjing"
       name: "💡智库-42章经"
-      url: "https://my-rsshub-rust.vercel.app/zhihu/people/42zhang-jing-71/posts"
+      url: "https://feed.xyzcdn.net/fchb79v7z8m8" # 🎯 换用官方原生音频流，100% 稳定避开反爬
 
     - id: "ceibs"
       name: "💡智库-中欧商业评论"
-      url: "https://my-rsshub-rust.vercel.app/zhihu/people/zhong-ou-shang-ye-ping-lun/posts"
+      url: "https://rsshub.rssforever.com/zhihu/people/zhong-ou-shang-ye-ping-lun/posts"
 
     - id: "shizhi"
       name: "💡智库-视知产研院"
-      url: "https://my-rsshub-rust.vercel.app/zhihu/people/shi-zhi-chan-yan-yuan/posts"
+      url: "https://rsshub.rssforever.com/zhihu/people/shi-zhi-chan-yan-yuan/posts"
 
     - id: "liuxuesheng"
       name: "💡智库-留学生日报"
-      url: "https://my-rsshub-rust.vercel.app/zhihu/people/bei-mei-liu-xue-sheng-ri-bao/posts"
+      url: "https://rsshub.rssforever.com/zhihu/people/bei-mei-liu-xue-sheng-ri-bao/posts"
 
     - id: "xiaomasong"
       name: "💡智库-小马宋"
-      url: "https://my-rsshub-rust.vercel.app/zhihu/people/xiao-ma-song/posts"
-
+      url: "https://rsshub.rssforever.com/zhihu/people/xiao-ma-song/posts"
 
 
 
