@@ -167,4 +167,5 @@ jobs:
           S3_ENDPOINT_URL: ${{ secrets.S3_ENDPOINT_URL }}
           S3_REGION: ${{ secrets.S3_REGION }}
           GITHUB_ACTIONS: true
-        run: uv run python -m trendradar
+          TZ: Asia/Shanghai          # 👈 塞在这里！注意前面的空格缩进和上面完全对齐
+       run: uv run python -m trendradar
