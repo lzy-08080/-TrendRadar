@@ -102,6 +102,7 @@ jobs:
           fi
 
       - name: 掐表等待直到 30 分
+        if: github.event_name == 'schedule'      # 👈 增加这一行！意思是：如果是手动触发，直接跳过这个等待步骤！
         env:
           TZ: Asia/Shanghai
         run: |
