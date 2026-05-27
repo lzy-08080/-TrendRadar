@@ -32,8 +32,8 @@ rss:
     enabled: true
     max_age_days: 1   # 🚨 极度关键：只抓最近24小时的内容
 
-feeds:
-  - id: "xhs-global-trending"
+  feeds:
+    - id: "xhs-global-trending"
       name: "🔥小红书-全网热搜"
       url: "https://rsshub.rssforever.com/xiaohongshu/trending"
 
@@ -47,7 +47,7 @@ feeds:
 
     - id: "sv101"
       name: "💡智库-硅谷101"
-      url: "https://feed.xyzcdn.net/7v79wz8v0m8z" # 🎯 换用官方原生音频流，100% 稳定避开反爬
+      url: "https://feed.xyzcdn.net/7v79wz8v0m8z"
 
     - id: "xinzhiyuan"
       name: "💡智库-新智元"
@@ -71,7 +71,7 @@ feeds:
 
     - id: "42zhangjing"
       name: "💡智库-42章经"
-      url: "https://feed.xyzcdn.net/fchb79v7z8m8" # 🎯 换用官方原生音频流，100% 稳定避开反爬
+      url: "https://feed.xyzcdn.net/fchb79v7z8m8"
 
     - id: "ceibs"
       name: "💡智库-中欧商业评论"
@@ -88,7 +88,6 @@ feeds:
     - id: "xiaomasong"
       name: "💡智库-小马宋"
       url: "https://rsshub.rssforever.com/zhihu/people/xiao-ma-song/posts"
-
 
 
 
