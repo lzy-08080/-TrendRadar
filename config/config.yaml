@@ -30,64 +30,64 @@ rss:
   enabled: true
   freshness_filter:
     enabled: true
-    max_age_days: 1   # 🚨 极度关键：只抓最近24小时的内容
+    max_age_days: 1
 
   feeds:
     - id: "xhs-global-trending"
       name: "🔥小红书-全网热搜"
-      url: "https://rsshub.rssforever.com/xiaohongshu/trending"
+      url: "https://rss.feedland.cn/xiaohongshu/trending" # 🎯 换用 feedland 极客私有高抗封锁节点
 
     - id: "xhs-student-search"
       name: "🎓小红书-大学生实习"
-      url: "https://rsshub.rssforever.com/xiaohongshu/search/大学生实习/hot"
+      url: "https://rss.feedland.cn/xiaohongshu/search/大学生实习/hot"
 
     - id: "competitor-uncareer"
       name: "🚨竞品监控-uncareer"
-      url: "https://rsshub.rssforever.com/xiaohongshu/search/uncareer/hot"
+      url: "https://rss.feedland.cn/xiaohongshu/search/uncareer/hot"
 
     - id: "sv101"
       name: "💡智库-硅谷101"
-      url: "https://feed.xyzcdn.net/7v79wz8v0m8z"
+      url: "https://rss.feedland.cn/xiaoyuzhou/podcast/5e77757d418a84a04620ec42" # 🎯 走小宇宙镜像，换用高抗封锁网关
 
     - id: "xinzhiyuan"
       name: "💡智库-新智元"
-      url: "https://rsshub.rssforever.com/zhihu/people/xin-zhi-yuan-84-75/posts"
+      url: "https://rsshub.liumingye.cn/zhihu/people/xin-zhi-yuan-84-75/posts" # 🎯 换用刘明野中国香港专线节点，专门针对知乎做了IP池伪装
 
     - id: "deeptech"
       name: "💡智库-Deeptech深科技"
-      url: "https://rsshub.rssforever.com/zhihu/people/deeptechshen-ke-ji/posts"
+      url: "https://rsshub.liumingye.cn/zhihu/people/deeptechshen-ke-ji/posts"
 
     - id: "jiazi"
       name: "💡智库-甲子光年"
-      url: "https://rsshub.rssforever.com/zhihu/people/jia-zi-guang-nian/posts"
+      url: "https://rsshub.liumingye.cn/zhihu/people/jia-zi-guang-nian/posts"
 
     - id: "huxiu-article"
       name: "💡智库-虎嗅精选"
-      url: "https://rsshub.rssforever.com/huxiu/article"
+      url: "https://rsshub.liumingye.cn/huxiu/article"
 
     - id: "baobian"
       name: "💡智库-豹变"
-      url: "https://rsshub.rssforever.com/zhihu/people/bao-bian-34/posts"
+      url: "https://rsshub.liumingye.cn/zhihu/people/bao-bian-34/posts"
 
     - id: "42zhangjing"
       name: "💡智库-42章经"
-      url: "https://feed.xyzcdn.net/fchb79v7z8m8"
+      url: "https://rss.feedland.cn/xiaoyuzhou/podcast/5e777556418a84a0461f3640" # 🎯 换用小宇宙播客源的 feedland 穿透
 
     - id: "ceibs"
       name: "💡智库-中欧商业评论"
-      url: "https://rsshub.rssforever.com/zhihu/people/zhong-ou-shang-ye-ping-lun/posts"
+      url: "https://rsshub.liumingye.cn/zhihu/people/zhong-ou-shang-ye-ping-lun/posts"
 
     - id: "shizhi"
       name: "💡智库-视知产研院"
-      url: "https://rsshub.rssforever.com/zhihu/people/shi-zhi-chan-yan-yuan/posts"
+      url: "https://rsshub.liumingye.cn/zhihu/people/shi-zhi-chan-yan-yuan/posts"
 
     - id: "liuxuesheng"
       name: "💡智库-留学生日报"
-      url: "https://rsshub.rssforever.com/zhihu/people/bei-mei-liu-xue-sheng-ri-bao/posts"
+      url: "https://rsshub.liumingye.cn/zhihu/people/bei-mei-liu-xue-sheng-ri-bao/posts"
 
     - id: "xiaomasong"
       name: "💡智库-小马宋"
-      url: "https://rsshub.rssforever.com/zhihu/people/xiao-ma-song/posts"
+      url: "https://rsshub.liumingye.cn/zhihu/people/xiao-ma-song/posts"
 
 
 
