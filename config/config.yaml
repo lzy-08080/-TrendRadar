@@ -32,7 +32,7 @@ rss:
     enabled: true
     max_age_days: 1   # 🚨 极度关键：只抓最近24小时的内容
 
-  feeds:
+feeds:
   - id: "xhs-global-trending"
       name: "🔥小红书-全网热搜"
       url: "https://rsshub.rssforever.com/xiaohongshu/trending"
