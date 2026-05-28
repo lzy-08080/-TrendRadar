@@ -31,28 +31,51 @@ rss:
   enabled: true
   freshness_filter:
     enabled: true
-    max_age_days: 1
+    max_age_days: 1   # 🚨 极度关键：只抓最近24小时的内容，保证推送全是最新鲜的干货
 
   feeds:
+    # 🎙️ 第一梯队：原生顶级播客（官方音频流，100% 稳定避开反爬）
+    - id: "sv101"
+      name: "💡智库-硅谷101"
+      url: "https://feeds.fireside.fm/sv101/rss" 
+      
+    - id: "42zhangjing"
+      name: "💡智库-42章经"
+      url: "https://rsshub.moe/xiaoyuzhou/podcast/5e777556418a84a0461f3640" 
+
+    # 📰 第二梯队：前沿科技大盘基本面（全部由官方原生提供，0 反爬拦截）
     - id: "36kr-ai"
       name: "💡智库-36氪前沿科技"
-      url: "https://36kr.com/feed" # 🎯 36氪全网官方原生流，包含最全的行业及大模型动态
+      url: "https://36kr.com/feed" 
 
     - id: "huxiu-article"
       name: "💡智库-虎嗅精选"
       url: "https://my-rsshub-rust.vercel.app/huxiu/article"
       
-    - id: "sv101"
-      name: "💡智库-硅谷101"
-      url: "https://feeds.fireside.fm/sv101/rss" # 🎯 官方原生海外音频流，无视任何反爬，Actions 秒过
+    - id: "tmtpost"
+      name: "💡智库-钛媒体官方"
+      url: "https://rsshub.app/tmtpost/post" 
 
-    - id: "42zhangjing"
-      name: "💡智库-42章经"
-      url: "https://rsshub.moe/xiaoyuzhou/podcast/5e777556418a84a0461f3640" # 🎯 走海外 Actions 友好型专线镜像抓取播客动态
+    - id: "geekpark"
+      name: "💡智库-极客公园"
+      url: "https://rsshub.app/geekpark/breaking" 
 
+    - id: "ifanr"
+      name: "💡智库-爱范儿"
+      url: "https://www.ifanr.com/feed" 
+
+    - id: "panydaily"
+      name: "💡智库-PANews加密与前沿科技"
+      url: "https://www.panewslab.com/zh/rss/index.xml" 
+
+    - id: "36kr-rongzi"
+      name: "💰商业-36氪融资快讯"
+      url: "https://cherylchenxue-star.github.io/36-rss/rss.xml" 
+
+    # 🚀 第三梯队：高价值智库（通过 Actions 友好型海外专线，穿透知乎限制）
     - id: "xinzhiyuan"
       name: "💡智库-新智元"
-      url: "https://rsshub.moe/zhihu/people/xin-zhi-yuan-84-75/posts" # 🎯 换用独立高可用海外节点，完美穿透知乎对 Actions 的 503 拦截
+      url: "https://rsshub.moe/zhihu/people/xin-zhi-yuan-84-75/posts" 
 
     - id: "deeptech"
       name: "💡智库-Deeptech深科技"
@@ -64,8 +87,7 @@ rss:
 
     - id: "metrodata"
       name: "📊智库-城市数据团"
-      url: "https://rsshub.moe/36kr/user/5341257" # 🎯 降维打击：放弃死磕微信，改走其在 36氪的官方同步专栏，永不封锁
-
+      url: "https://rsshub.moe/36kr/user/5341257"
 
 
 # ===============================================================
