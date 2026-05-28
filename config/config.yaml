@@ -1,201 +1,129 @@
-# ═══════════════════════════════════════════════════════════════
-#                    TrendRadar 配置文件 (全网商业与求职侦察版)
-# ═══════════════════════════════════════════════════════════════
+name: Get Hot News
 
-app:
-  timezone: "Asia/Shanghai"
-  show_version_update: true
+on:                                 
+  schedule:                         
+    # 1:20 UTC = 北京时间 09:20
+    # 9:20 UTC = 北京时间 17:20
+    - cron: '20 1,9 * * *'          
+  workflow_dispatch:                
 
-schedule:
-  enabled: false
-  preset: "custom"      # 👈 把 "morning_evening" 改成 "custom"
+concurrency:
+  group: crawler-${{ github.ref_name }}
+  cancel-in-progress: true
 
-# ===============================================================
-# 2. 数据源 - 热榜平台 (精简保留高净值流量池)
-# ===============================================================
-platforms:
-  enabled: true
-  sources:
-    - id: "bilibili-hot-search"
-      name: "B站热搜"
-    - id: "zhihu"
-      name: "知乎"
-    - id: "weibo"
-      name: "微博"
+permissions:
+  contents: read
+  actions: write
 
-# ===============================================================
-# 3. 数据源 - RSS 订阅 (你的 15 大金牌智库)
-# ===============================================================
-rss:
-  enabled: true
-  freshness_filter:
-    enabled: true
-    max_age_days: 1
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TZ: Asia/Shanghai
 
-  feeds:
-    - id: "36kr-ai"
-      name: "💡智库-36氪前沿科技"
-      url: "https://36kr.com/feed" # 🎯 36氪全网官方原生流，包含最全的行业及大模型动态
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          clean: true
 
-    - id: "huxiu-article"
-      name: "💡智库-虎嗅精选"
-      url: "https://my-rsshub-rust.vercel.app/huxiu/article"
-      
-    - id: "sv101"
-      name: "💡智库-硅谷101"
-      url: "https://feeds.fireside.fm/sv101/rss" # 🎯 官方原生海外音频流，无视任何反爬，Actions 秒过
+      - name: Check Expiration
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          WORKFLOW_FILE="crawler.yml"
+          API_URL="repos/${{ github.repository }}/actions/workflows/$WORKFLOW_FILE/runs"
 
-    - id: "42zhangjing"
-      name: "💡智库-42章经"
-      url: "https://rsshub.moe/xiaoyuzhou/podcast/5e777556418a84a0461f3640" # 🎯 走海外 Actions 友好型专线镜像抓取播客动态
+          TOTAL=$(gh api "$API_URL" --jq '.total_count')
+          if [ -z "$TOTAL" ] || [ "$TOTAL" -eq 0 ]; then
+            echo "No previous runs found, skipping expiration check"
+            exit 0
+          fi
 
-    - id: "xinzhiyuan"
-      name: "💡智库-新智元"
-      url: "https://rsshub.moe/zhihu/people/xin-zhi-yuan-84-75/posts" # 🎯 换用独立高可用海外节点，完美穿透知乎对 Actions 的 503 拦截
+          LAST_PAGE=$(( (TOTAL + 99) / 100 ))
+          FIRST_RUN_DATE=$(gh api "$API_URL?per_page=100&page=$LAST_PAGE" --jq '.workflow_runs[-1].created_at')
 
-    - id: "deeptech"
-      name: "💡智库-Deeptech深科技"
-      url: "https://rsshub.moe/zhihu/people/deeptechshen-ke-ji/posts"
+          if [ -n "$FIRST_RUN_DATE" ]; then
+            CURRENT_TIMESTAMP=$(date +%s)
+            FIRST_RUN_TIMESTAMP=$(date -d "$FIRST_RUN_DATE" +%s)
+            DIFF_SECONDS=$((CURRENT_TIMESTAMP - FIRST_RUN_TIMESTAMP))
+            LIMIT_SECONDS=604800
 
-    - id: "jiazi"
-      name: "💡智库-甲子光年"
-      url: "https://rsshub.moe/zhihu/people/jia-zi-guang-nian/posts"
+            if [ $DIFF_SECONDS -gt $LIMIT_SECONDS ]; then
+              echo "⚠️ 试用期已结束，请运行 'Check In' 签到续期"
+              echo "⚠️ Trial expired. Run 'Check In' to renew."
+              gh workflow disable "$WORKFLOW_FILE"
+              exit 1
+            else
+              DAYS_LEFT=$(( (LIMIT_SECONDS - DIFF_SECONDS) / 86400 ))
+              echo "✅ 试用期剩余 ${DAYS_LEFT} 天，到期前请运行 'Check In' 签到续期"
+              echo "✅ Trial: ${DAYS_LEFT} days left. Run 'Check In' before expiry to renew."
+            fi
+          fi
 
-    - id: "metrodata"
-      name: "📊智库-城市数据团"
-      url: "https://rsshub.moe/36kr/user/5341257" # 🎯 降维打击：放弃死磕微信，改走其在 36氪的官方同步专栏，永不封锁
+      - name: Set up Python
+        if: success()
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
 
+      - name: Install uv
+        if: success()
+        uses: astral-sh/setup-uv@v7
 
+      - name: Install dependencies
+        if: success()
+        run: uv sync --frozen --no-dev
 
-# ===============================================================
-# 4. 报告模式与筛选策略
-# ===============================================================
-report:
-  mode: "current"
-  display_mode: "keyword"
-  sort_by_position_first: false
-  rank_threshold: 5
-  max_news_per_keyword: 0
+      - name: Verify required files
+        if: success()
+        run: |
+          if [ ! -f config/config.yaml ]; then
+            echo "Error: Config missing"
+            exit 1
+          fi
 
-filter:
-  method: "keyword"                  # 依然保持 AI 全盘掌控
-  priority_sort_enabled: true
+      - name: 掐表等待直到 30 分
+        if: github.event_name == 'schedule'
+        run: |
+          echo "✅ 获取到服务器，当前时间: $(date +'%Y-%m-%d %H:%M:%S')"
+          while [ $(date +%M) -lt 30 ]; do
+            echo "⏳ 等待半点，当前时间: $(date +'%H:%M:%S')，休眠 20 秒..."
+            sleep 20
+          done
+          echo "🚀 时间到！启动雷达: $(date +'%H:%M:%S')"
 
-ai_filter:
-  batch_size: 200
-  batch_interval: 2
-  min_score: 0.7
-  reclassify_threshold: 0.6
-  prompt_file: "prompt.txt"
-  extract_prompt_file: "extract_prompt.txt"
-  update_tags_prompt_file: "update_tags_prompt.txt"
-
-# ===============================================================
-# 5. 推送内容控制
-# ===============================================================
-display:
-  region_order:
-    - ai_analysis
-    - new_items
-    - hotlist
-    - rss
-    - standalone
-  regions:
-    hotlist: true
-    new_items: false
-    rss: true
-    standalone: false
-    ai_analysis: true
-  standalone:
-    platforms: []
-    rss_feeds: []
-    max_items: 20
-
-# ===============================================================
-# 6. 推送通知 (直连企业微信群)
-# ===============================================================
-notification:
-  enabled: true
-  channels:
-    wework:
-      webhook_url: ""  # 安全密钥占位符
-      msg_type: "markdown"
-
-# ===============================================================
-# 7. 存储配置
-# ===============================================================
-storage:
-  backend: "auto"
-  formats:
-    sqlite: true
-    txt: false
-    html: true
-  local:
-    data_dir: "output"
-    retention_days: 0
-  remote:
-    retention_days: 0
-    endpoint_url: ""
-    bucket_name: ""
-    access_key_id: ""
-    secret_access_key: ""
-    region: ""
-  pull:
-    enabled: false
-    days: 7
-
-# ===============================================================
-# 8. AI 模型配置
-# ===============================================================
-ai:
-  model: "deepseek/deepseek-chat"
-  api_key: ""           # 安全密钥占位符
-  api_base: "https://api.deepseek.com/v1"
-  timeout: 120
-  temperature: 1.0
-  max_tokens: 5000
-  num_retries: 1
-  fallback_models: []
-
-ai_analysis:
-  enabled: true
-  language: "Chinese"
-  prompt_file: "ai_analysis_prompt.txt"
-  mode: "follow_report"
-  max_news_for_analysis: 150
-  include_rss: true
-  include_standalone: true
-  include_rank_timeline: true
-
-ai_translation:
-  enabled: true
-  language: "中文"
-  prompt_file: "ai_translation_prompt.txt"
-  scope:
-    hotlist: false
-    rss: true
-    standalone: true
-
-advanced:
-  debug: false
-  version_check_url: "https://raw.githubusercontent.com/sansan0/TrendRadar/refs/heads/master/version"
-  mcp_version_check_url: "https://raw.githubusercontent.com/sansan0/TrendRadar/refs/heads/master/version_mcp"
-  configs_version_check_url: "https://raw.githubusercontent.com/sansan0/TrendRadar/refs/heads/master/version_configs"
-  crawler:
-    request_interval: 2000
-    use_proxy: false
-    default_proxy: "http://127.0.0.1:10801"
-  rss:
-    request_interval: 1000
-    timeout: 15
-    use_proxy: false
-    proxy_url: ""
-  weight:
-    rank: 0.6
-    frequency: 0.3
-    hotness: 0.1
-  max_accounts_per_channel: 3
-  batch_size:
-    default: 4000
-    wework: 4000
-  batch_send_interval: 3
+      - name: Run crawler
+        if: success()
+        env:
+          FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          DINGTALK_WEBHOOK_URL: ${{ secrets.DINGTALK_WEBHOOK_URL }}
+          WEWORK_WEBHOOK_URL: ${{ secrets.WEWORK_WEBHOOK_URL }}
+          WEWORK_MSG_TYPE: ${{ secrets.WEWORK_MSG_TYPE }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          EMAIL_SMTP_SERVER: ${{ secrets.EMAIL_SMTP_SERVER }}
+          EMAIL_SMTP_PORT: ${{ secrets.EMAIL_SMTP_PORT }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          NTFY_SERVER_URL: ${{ secrets.NTFY_SERVER_URL }}
+          NTFY_TOKEN: ${{ secrets.NTFY_TOKEN }}
+          BARK_URL: ${{ secrets.BARK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          GENERIC_WEBHOOK_URL: ${{ secrets.GENERIC_WEBHOOK_URL }}
+          GENERIC_WEBHOOK_TEMPLATE: ${{ secrets.GENERIC_WEBHOOK_TEMPLATE }}
+          AI_ANALYSIS_ENABLED: ${{ secrets.AI_ANALYSIS_ENABLED }}
+          AI_API_KEY: ${{ secrets.AI_API_KEY }}
+          AI_MODEL: ${{ secrets.AI_MODEL }}
+          AI_API_BASE: ${{ secrets.AI_API_BASE }}
+          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+          S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
+          S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+          S3_ENDPOINT_URL: ${{ secrets.S3_ENDPOINT_URL }}
+          S3_REGION: ${{ secrets.S3_REGION }}
+          GITHUB_ACTIONS: true
+        run: uv run python -m trendradar
